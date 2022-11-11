@@ -37,5 +37,25 @@ You are standing in an open field west of a white house, with
 a boarded front door.
 There is a small mailbox here.
 
+>open mailbox
+Opening the mailbox reveals a leaflet.
+
+>take leaflet
+Taken.
+                                                                                
+>read leaflet                                                                   
+WELCOME TO ZORK                                                                 
+     ZORK is a game of adventure, danger, and low cunning. In                   
+it you will explore some of the most amazing territory ever                     
+seen by mortals.                                                                
+                                                                                
+    No computer should be without one!                                          
+                                                                                
+    Copyright 1982 by Infocom, Inc.                                             
+          All rights reserved.                                                  
+  ZORK is a trademark of Infocom, Inc.                                          
+                                                                                
+                                                                                
 >
+
 ```
