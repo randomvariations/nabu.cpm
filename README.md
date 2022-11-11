@@ -17,3 +17,25 @@ Executing the X command followed by a Y for yes will then load and execute CP/M 
 The compact flash card interface can be created by connecting the data lines (D0-D7 = J9 pins 16-23) and lower three address lines (A0-A2 = J9 pins 6-8) to a compact flash card adapter.  The chip select (J9 pin 5) can be connected to the card's card select line.  The option slot read (J9 pin 12) and write (J9 pin 11) lines are gated by the IO request (J9 pin 13) using two OR gates such as those in a 74LS32.  The output from these forms the IOR and IOW signals.  A small (100ohm) resistor should be placed in series with the output in order to help with signal integrity, and then routed to the IOR and IOW signals on the compact flash card.
 
 ![schematic](https://github.com/randomvariations/nabu.cpm/blob/main/images/schematic.png?raw=true)
+
+```
+Z80 CP/M BIOS 1.0 by G. Searle 2007-13
+
+CP/M 2.2 Copyright 1979 (c) by Digital Research
+
+A>dir
+A: ZORK1    DAT : ZORK1    COM
+A>zork1
+ZORK I: The Great Underground Empire
+Copyright 1982 by Infocom, Inc.
+All rights reserved.
+ZORK is a trademark of Infocom, Inc.
+Release 25 / Serial number 000000
+
+West of House
+You are standing in an open field west of a white house, with
+a boarded front door.
+There is a small mailbox here.
+
+>
+```
