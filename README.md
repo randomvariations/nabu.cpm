@@ -2,7 +2,7 @@
 
 This code is based on the code developed by Grant Searle as linked on http://searle.x10host.com/cpm/index.html.
 
-It is designed for a 32MB compact flash card installed in option slot 0 and a USB->TTL serial converter connected to the transmit (pin 25) and receive (pin 21) connections on the installed [TR1863](https://github.com/randomvariations/nabu.cpm/blob/main/images/tr1863.png).  These pins should be lifted and connected to the RX and TX pines of the serial converter.
+It is designed for a 32MB compact flash card installed in option slot 0 and a USB->TTL serial converter connected to the transmit (pin 25) and receive (pin 20) connections on the installed [TR1863](https://github.com/randomvariations/nabu.cpm/blob/main/images/tr1863.png).  These pins should be lifted and connected to the RX and TX pines of the serial converter.
 
 While the port is clocked around 3% slower than the normal 115200 rate, it appears that most converters are accurate enough to still work.  If using minicom (or another terminal) that can insert a small delay between characters, it may be helpful to use a 1-2ms delay.
 
