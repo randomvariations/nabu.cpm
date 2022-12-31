@@ -11,6 +11,7 @@ This repository contains three files consisting of a modified rev29 ROM to ident
 | 0x1602  | 0xE8  | 0x50  | Change ID to 0x50 |
 | 0x164C  | 0xF9  | 0xF8  | Write 0x01 to register 1 to select 8-bit mode |
 | 0x1658  | 0x15  | 0xEF  | Execute select features command |
+| 0x1FFE  | 0x78  | 0xE1  | Fix Checksum |
 
 ### Block 0 Loader Changes:
 (Addresses on disk, add 0xC000 for in memory)
