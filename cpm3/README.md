@@ -72,3 +72,62 @@ ed 79           out     (c),a           - LBA mode
 c9              ret
 ```
 
+### CPM3.SYS Changes:
+(Addresses in memory)
+
+| Address | Original Byte | Modified Byte | Comment |
+| ------- | ------------- | ------------- | ------- |
+| 0xED26  | 0x20  | 0xE0  | Set LBA Mode vs. CHS |
+| 0xEDF5  | 0x20  | 0xE0  | Set LBA Mode vs. CHS |
+| 0xEDFE  | 0x15  | 0x10  | MAME wants 0x10 vs. 0x15 |
+| 0xEE11  | 0x20  | 0xE0  | Set LBA Mode vs. CHS |
+| 0xEE61  | 0xE8  | 0x50  | Change ID to 0x50 |
+
+Again, the largest change is to convert from CHS to LBA by multiplying the cylinder by 64 (shift left 6 times) and adding the sector address.
+
+```
+0xEC93:
+29              add     hl,hl
+29              add     hl,hl
+29              add     hl,hl
+29              add     hl,hl
+29              add     hl,hl
+29              add     hl,hl
+
+0xEC99:
+dd 46 06        ld	b,(ix+$06)	- sector high
+dd 4e 05        ld	c,(ix+$05)	- sector low
+09              add     hl,bc
+
+0xECA0:
+3e 01           ld	a,$01
+dd 4e 14        ld	c,(ix+$14)	- c = sector count
+ed 79           out     (c),a           - Sector Count = 1
+
+0xECA7:
+7d              ld	a,l             - a = LBA low byte
+dd 4e 15        ld	c,(ix+$15)	- c = sector number (low byte)
+ed 79           out     (c),a           - LBA Low Byte
+
+0xECAD:
+7c              ld	a,h             - a = LBA mid byte
+dd 4e 16        ld	c,(ix+$16)	- c = cylinder low (mid byte)
+ed 79           out     (c),a           - LBA Mid Byte
+
+0xECB3:
+af              xor     a               - a = 0
+dd 4e 17        ld	c,(ix+$17)	- c = cylinder high
+ed 79           out     (c),a           - LBA High Byte = 0
+
+0xECB9:
+3e e0           ld	a,$e0
+dd 4e 18        ld	c,(ix+$18)	- c = Register 6 (Card/Head)
+ed 79           out     (c),a           - LBA mode
+
+0xECC0:
+00 00 00 00     nop nop nop nop
+00 00 00 00     nop nop nop nop
+00 00 00 00     nop nop nop nop
+00              nop
+```
+
