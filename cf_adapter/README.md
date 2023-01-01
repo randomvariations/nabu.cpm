@@ -6,10 +6,12 @@ A working prototype has been shared at [OSH Park](https://oshpark.com/shared_pro
 
 ![schematic](https://github.com/randomvariations/nabu.cpm/blob/main/cf_adapter/images/cf_schematic.png?raw=true)
 
-For those using the floppy disk controller and wishing to connect the adapter to it directly, this schematic can be used:
+For those using the floppy disk controller and wishing to connect the adapter to it directly, the below schematic can be used.
+
+As the primary connector no longer includes a voltage source, an additional lead will need to be connected to supply power to the 74HCT32 and compact flash card.  Alternatively, some compact flash card adapters can be modified to supply power to this adapter card when powered externally.
 
 ![schematic](https://github.com/randomvariations/nabu.cpm/blob/main/cf_adapter/images/cf_schematic_fdc.png?raw=true)
 
-An untested PCB is shared at [OSH Park](https://oshpark.com/shared_projects/SkwoJ9rJ)
+An untested PCB is shared at [OSH Park](https://oshpark.com/shared_projects/853PUtM5)
 
 [^1]:  Signal integrity has been discovered to be an issue on many of the compact flash and IDE interface designs used by hobbiests on their projects.  The Ultra DMA ATA specification recommends the usage of series termination resistors on most of the IO lines, with values as either 22 ohms or 33 ohms for signals originating from the host or signals that are bidirection respectively.  On my breadboard prototype, I found that I needed to increase the read/write resistors to 100 ohms.  I did not need other resistors for use with the single card that I tested.  A more robust design would include not only series termination resistors as per the specification, but also include buffering in order to ensure that the resistors are placed as close to the source as possible.
