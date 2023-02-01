@@ -1,6 +1,55 @@
 # CP/M 3.0 for the NABU Personal Computer using a simple compact flash adapter
 
-This repository contains three files consisting of a modified rev29 ROM to identify the compact flash card and initialize it in 8-Bit mode, a hard drive image that can be written to the compact flash card, and a bare copy of cpm3.sys with updates to use LBA mode for the hard drive interface which can be copied to a floppy disk in order to access the compact flash card.
+This repository contains files consisting of a modified rev29 ROM to identify the compact flash card and initialize it in 8-Bit mode, a hard drive image that can be written to the compact flash card, and a bare copy of cpm3.sys with updates to use LBA mode for the hard drive interface which can be copied to a floppy disk in order to access the compact flash card.  Additional files are available to create a new drive image from a blank image.
+
+### Creating a bootable disk image
+
+This uses cpmtools to create a file that is bootable when written to a compact flash card.
+
+```
+dd if=/dev/zero of=<image_name>.raw bs=512 count=19584
+
+mkfs.cpm -f nabu-hddf <image_name>.raw
+
+mkfs.cpm -f nabu-hdd -b boot_block.bin -b cpmldr.bin <image_name>.raw
+
+cpmcp -f nabu-hdd <image_name>.raw cpm3-ide.sys 0:cpm3.sys
+
+cpmcp -f nabu-hdd <image_name>.raw ccp.com 0:ccp.com
+```
+
+The first two mkfs.cpm commands create the F and E partitions, with the second adding the boot block and loader to the begining of the disk.  The cpmcp instructions copy the required system files to the disk.
+
+The definitions required for the two drives are:
+
+```
+diskdef nabu-hdd
+    seclen 512
+    tracks 1224
+    sectrk 16
+    blocksize 4096
+    maxdir 1024
+    boottrk 4
+    os 3
+end
+
+# Nabu hard disk 2nd partition F:
+diskdef nabu-hddf
+    seclen 512
+    tracks 1224
+    sectrk 16
+    blocksize 4096
+    maxdir 256
+    boottrk 980
+    os 3
+end
+```
+
+The chdman command from MAME can be used to convert this to a chd file usable in MAME with an emulated compact flash adapter.
+
+```
+chdman createhd -f -chs 306,4,16 -c none -i <image_name>.raw -o <image_name>.chd
+```
 
 ### ROM Changes:
 
@@ -131,4 +180,22 @@ ed 79           out     (c),a           - LBA mode
 00 00 00 00     nop nop nop nop
 00              nop
 ```
+
+### Credits
+
+The boot block and loader were written by brijohn:
+
+https://forum.vcfed.org/index.php?threads/nabu-pc-emulation-under-mame.1241092/post-1290800
+
+https://forum.vcfed.org/index.php?threads/nabu-pc-emulation-under-mame.1241092/post-1291507
+
+The hard disk image used was compiled by guidol from brijohn's original image:
+
+https://forum.vcfed.org/index.php?threads/nabu-pc-emulation-under-mame.1241092/post-1291523
+
+cpmtools disk defitions are available from here:
+
+https://forum.vcfed.org/index.php?threads/nabu-pc-emulation-under-mame.1241092/post-1291635
+
+https://forum.vcfed.org/index.php?threads/nabu-pc-emulation-under-mame.1241092/post-1291683
 
