@@ -1,6 +1,6 @@
 # CP/M 3.0 for the NABU Personal Computer using a simple compact flash adapter
 
-This repository contains files consisting of a modified rev29 ROM to identify the compact flash card and initialize it in 8-Bit mode, a hard drive image that can be written to the compact flash card, and a bare copy of cpm3.sys with updates to use LBA mode for the hard drive interface which can be copied to a floppy disk in order to access the compact flash card.  Additional files are available to create a new drive image from a blank image.
+This repository contains files consisting of a hard drive image that can be written to the compact flash card, and a bare copy of cpm3.sys with updates to use LBA mode for the hard drive interface which can be copied to a floppy disk in order to access the compact flash card.  Additional files are available to create a new drive image from a blank image.
 
 ### Creating a bootable disk image
 
@@ -50,17 +50,6 @@ The chdman command from MAME can be used to convert this to a chd file usable in
 ```
 chdman createhd -f -chs 306,4,16 -c none -i <image_name>.raw -o <image_name>.chd
 ```
-
-### ROM Changes:
-
-| Address | Original Byte | Modified Byte | Comment |
-| ------- | ------------- | ------------- | ------- |
-| 0x0418  | 0xE8  | 0x50  | Change ID to 0x50 |
-| 0x15BD  | 0x20  | 0xE0  | Set LBA Mode vs. CHS |
-| 0x1602  | 0xE8  | 0x50  | Change ID to 0x50 |
-| 0x164C  | 0xF9  | 0xF8  | Write 0x01 to register 1 to select 8-bit mode |
-| 0x1658  | 0x15  | 0xEF  | Execute select features command |
-| 0x1FFE  | 0x78  | 0xE1  | Fix Checksum |
 
 ### Block 0 Loader Changes:
 (Addresses on disk, add 0xC000 for in memory)
