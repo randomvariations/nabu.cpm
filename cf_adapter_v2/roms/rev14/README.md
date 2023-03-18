@@ -20,6 +20,7 @@ This repository contains a modified 4K rev14 ROM to look for the compact flash c
 | 0x0F4A  | 0xF9  | 0xF8  | Write 0x01 to register 1 to select 8-bit mode |
 | 0x0F56  | 0x15  | 0xEF  | Execute select features command |
 
+### Context
 ```
 0EB2: F3        di
 0EB3: CD F9 0E  call $0EF9              call find compact flash
@@ -37,15 +38,14 @@ This repository contains a modified 4K rev14 ROM to look for the compact flash c
 0F04: C6 10     add  a,$10
 0F06: 4F        ld   c,a
 0F07: 10 F4     djnz $0EFD
-
 			
 0F41: CD 5D 0F  call $0F5D              wait for card to go ready
 0F44: 00        nop
-0F45: 00 00     nop
-0F47: 00 00     nop
-0F49: 3A F8 FE  ld   a,($FEF9)
+0F45: 00 00     nop nop
+0F47: 00 00     nop nop
+0F49: 3A F8 FE  ld   a,($FEF8)
 0F4C: 4F        ld   c,a
-0F4D: 3E 01     ld   a,$01		8-bit mode feature
+0F4D: 3E 01     ld   a,$01              8-bit mode feature
 0F4F: ED 79     out  (c),a              CF reg 1 = 0x01
 0F51: 3A FF FE  ld   a,($FEFF)
 0F54: 4F        ld   c,a
@@ -54,5 +54,15 @@ This repository contains a modified 4K rev14 ROM to look for the compact flash c
 0F58: CD 5D 0F  call $0F5D
 0F5C: C9        ret
 
+0F5D: C5        push bc
+0F5E: 3A FE FE  ld   a,($FEFE)
+0F61: 4F        ld   c,a
+0F62: ED 78     in   a,(c)              check card status
+0F64: CB 7F     bit  7,a                busy?
+0F66: 20 FA     jr   nz,$0F62
+0F68: CB 47     bit  0,a                error?
+0F6A: 20 02     jr   nz,$0F6E
+0F6C: C1        pop  bc
+0F6D: C9          ret
 ```
 
