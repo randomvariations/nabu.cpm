@@ -1,4 +1,4 @@
-# CP/M 3.0 for the NABU Personal Computer using a simple compact flash adapter
+# Revision 14 Boot ROM for the NABU Personal Computer using a compact flash adapter
 
 This repository contains a modified 4K rev14 ROM to look for the compact flash card and initialize it in 8-Bit mode using the v2 compact flash adapter.  Once initialized, the first 512 bytes of the card is loaded to 0xC000 and a jump performed to it.
 
