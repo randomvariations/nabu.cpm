@@ -20,6 +20,17 @@ This repository contains a modified 4K rev17 ROM to look for the compact flash c
 | 0x0F6E  | 0xF9  | 0xF8  | Write 0x01 to register 1 to select 8-bit mode |
 | 0x0F7A  | 0x15  | 0xEF  | Execute select features command |
 
+### Intel Hex Patch
+```
+:0103C00050EC
+:010EDF00E032
+:010F2400507C
+:080F6500CD810F000000000027
+:010F6E00F88A
+:010F7A00EF87
+:00000001FF
+```
+
 ### Context
 ```
 0ED6: F3        di
