@@ -90,6 +90,6 @@ This repository contains a modified 4K rev14 ROM that is hard coded to enable th
 0F68: CB 47     bit  0,a                error?
 0F6A: 20 02     jr   nz,$0F6E
 0F6C: C1        pop  bc
-0F6D: C9          ret
+0F6D: C9        ret
 ```
 
